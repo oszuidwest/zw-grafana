@@ -4,8 +4,6 @@ services:
   influxdb:
     image: influxdb:latest
     container_name: influxdb
-    ports:
-      - "8086:8086"
     environment:
       - INFLUXDB_HTTP_AUTH_ENABLED=true
       - INFLUXDB_ADMIN_USER=admin
@@ -19,10 +17,18 @@ services:
   grafana:
     image: grafana/grafana-enterprise
     container_name: grafana
-    ports:
-      - "3000:3000"
     volumes:
       - grafana-storage:/var/lib/grafana
+    networks:
+      - private-network
+
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    ports:
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
     networks:
       - private-network
 

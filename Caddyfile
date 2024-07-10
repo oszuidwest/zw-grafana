@@ -1,0 +1,4 @@
+grafana.zuidwest.cloud {
+    reverse_proxy grafana:3000
+    tls techniek@zuidwesttv.nl
+}

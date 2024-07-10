@@ -13,6 +13,8 @@ services:
     volumes:
       - influxdb-data:/var/lib/influxdb
       - influxdb-ssl:/etc/ssl/influxdb
+    networks:
+      - private-network
 
   grafana:
     image: grafana/grafana-enterprise
@@ -21,6 +23,8 @@ services:
       - "3000:3000"
     volumes:
       - grafana-storage:/var/lib/grafana
+    networks:
+      - private-network
 
 volumes:
   influxdb-data:
@@ -29,3 +33,7 @@ volumes:
     driver: local
   grafana-storage:
     driver: local
+
+networks:
+  private-network:
+    driver: bridge

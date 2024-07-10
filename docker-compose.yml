@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_HTTP_AUTH_ENABLED=true
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=hackme
+    volumes:
+      - influxdb-data:/var/lib/influxdb
+      - influxdb-ssl:/etc/ssl/influxdb
+
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+volumes:
+  influxdb-data:
+    driver: local
+  influxdb-ssl:
+    driver: local
+  grafana-storage:
+    driver: local

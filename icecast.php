@@ -1,16 +1,16 @@
 <?php
 
 // Configuration
-$icecastURL = "https://icecast.zuidwestfm.nl";
-$host = "icecastzwfm";
+$icecastURL = getenv('ICECAST_URL');
+$host = getenv('ICECAST_HOST');
 $timestamp = microtime(true) * 1000;
-$icecastUsername = "admin";
-$icecastPassword = "";
-$influxDBURL = "http://influxdb:8086/api/v2/write";
-$influxDBToken = "";
-$influxDBOrg = "";
-$influxDBBucket = "";
-$influxDBPrecision = "ms";
+$icecastUsername = getenv('ICECAST_USERNAME');
+$icecastPassword = getenv('ICECAST_PASSWORD');
+$influxDBURL = getenv('INFLUXDB_URL');
+$influxDBToken = getenv('INFLUXDB_TOKEN');
+$influxDBOrg = getenv('INFLUXDB_ORG');
+$influxDBBucket = getenv('INFLUXDB_BUCKET');
+$influxDBPrecision = getenv('INFLUXDB_PRECISION');
 
 // SourceListmounts class holds single listener elements from Icecast XML
 class SourceListmounts {

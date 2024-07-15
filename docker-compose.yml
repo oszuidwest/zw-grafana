@@ -16,6 +16,7 @@ services:
       - private-network
     ports:
       - "8086:8086"  # API Port
+    restart: unless-stopped
 
   grafana:
     image: grafana/grafana-enterprise
@@ -24,6 +25,7 @@ services:
       - grafana-storage:/var/lib/grafana
     networks:
       - private-network
+    restart: unless-stopped
 
   caddy:
     image: caddy:latest
@@ -34,6 +36,7 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile
     networks:
       - private-network
+    restart: unless-stopped
 
 volumes:
   influxdb-data:

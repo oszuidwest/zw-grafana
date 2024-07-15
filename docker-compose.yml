@@ -38,6 +38,26 @@ services:
       - private-network
     restart: unless-stopped
 
+  feeder:
+    image: php:8.3-cli-alpine
+    container_name: feeder
+    volumes:
+      - ./icecast.php:/icecast.php
+    environment:
+      - ICECAST_URL=${ICECAST_URL}
+      - ICECAST_HOST=${ICECAST_HOST}
+      - ICECAST_USERNAME=${ICECAST_USERNAME}
+      - ICECAST_PASSWORD=${ICECAST_PASSWORD}
+      - INFLUXDB_URL=${INFLUXDB_URL}
+      - INFLUXDB_TOKEN=${INFLUXDB_TOKEN}
+      - INFLUXDB_ORG=${INFLUXDB_ORG}
+      - INFLUXDB_BUCKET=${INFLUXDB_BUCKET}
+      - INFLUXDB_PRECISION=${INFLUXDB_PRECISION}
+    networks:
+      - private-network
+    command: php /icecast.php
+    restart: unless-stopped
+
 volumes:
   influxdb-data:
     driver: local

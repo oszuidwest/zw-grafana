@@ -3,7 +3,6 @@
 // Configuration
 $icecastURL = getenv('ICECAST_URL');
 $host = getenv('ICECAST_HOST');
-$timestamp = microtime(true) * 1000;
 $icecastUsername = getenv('ICECAST_USERNAME');
 $icecastPassword = getenv('ICECAST_PASSWORD');
 $influxDBURL = getenv('INFLUXDB_URL');
@@ -36,14 +35,21 @@ class Listmounts {
     }
 }
 
-function main($icecastURL, $host, $timestamp, $icecastUsername, $icecastPassword, $influxDBURL, $influxDBToken, $influxDBOrg, $influxDBBucket, $influxDBPrecision) {
-    // Execute the checkIcecastListmounts function
-    $buffer = checkIcecastListmounts($icecastURL, $host, $timestamp, $icecastUsername, $icecastPassword, $influxDBURL, $influxDBToken, $influxDBOrg, $influxDBBucket, $influxDBPrecision);
+function main($icecastURL, $host, $icecastUsername, $icecastPassword, $influxDBURL, $influxDBToken, $influxDBOrg, $influxDBBucket, $influxDBPrecision) {
+    // Loop to run the script every 20 seconds
+    while (true) {
+        $timestamp = microtime(true) * 1000;
+        // Execute the checkIcecastListmounts function
+        $buffer = checkIcecastListmounts($icecastURL, $host, $timestamp, $icecastUsername, $icecastPassword, $influxDBURL, $influxDBToken, $influxDBOrg, $influxDBBucket, $influxDBPrecision);
 
-    // Print the buffer content
-    if ($buffer) {
-        echo "Received buffer to send to InfluxDB:\n";
-        echo $buffer;
+        // Print the buffer content
+        if ($buffer) {
+            echo "Received buffer to send to InfluxDB:\n";
+            echo $buffer;
+        }
+
+        // Sleep for 20 seconds
+        sleep(20);
     }
 }
 
@@ -127,6 +133,6 @@ function sendToInfluxDB($point, $influxDBURL, $influxDBToken, $influxDBOrg, $inf
 }
 
 // Call the main function
-main($icecastURL, $host, $timestamp, $icecastUsername, $icecastPassword, $influxDBURL, $influxDBToken, $influxDBOrg, $influxDBBucket, $influxDBPrecision);
+main($icecastURL, $host, $icecastUsername, $icecastPassword, $influxDBURL, $influxDBToken, $influxDBOrg, $influxDBBucket, $influxDBPrecision);
 
 ?>

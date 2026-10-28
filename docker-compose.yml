@@ -39,7 +39,7 @@ services:
     restart: unless-stopped
 
   feeder:
-    image: php:8.3-cli-alpine
+    image: php:8.4-cli-alpine
     container_name: feeder
     volumes:
       - ./icecast.php:/icecast.php
